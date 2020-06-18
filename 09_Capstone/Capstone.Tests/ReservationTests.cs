@@ -1,5 +1,8 @@
+using Capstone.DAL;
+using Capstone.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.IO;
@@ -16,6 +19,7 @@ namespace Capstone.Tests
         // Hold ids
         private int siteOne;
         private int resOne;
+        private int name;
 
         [TestInitialize]
         public void SetupDB()
@@ -34,6 +38,7 @@ namespace Capstone.Tests
                 {
                     siteOne = Convert.ToInt32(rdr["Site1"]);
                     resOne = Convert.ToInt32(rdr["Res1"]);
+                    name = Convert.ToInt32(rdr["Blackwoods"]);
                 }
             }
         }
@@ -50,10 +55,16 @@ namespace Capstone.Tests
         public void CheckIfSiteIsReserved()
         {
             // Arrange
+            ReservationSqlDAO dao = new ReservationSqlDAO(connectionString);
+            SiteSqlDAO dao1 = new SiteSqlDAO(connectionString);
 
             // Act
+            IList<Reservation> list = dao.getAllReservations(siteOne);
+            IList<Site> sites = dao1.GetSiteId(name);
 
             // Assert
+            Assert.AreEqual(false, sites[0].IsAvailable);
+
         }
     }
 }
