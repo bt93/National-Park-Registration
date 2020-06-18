@@ -50,17 +50,22 @@ namespace Capstone.Tests
             transaction.Dispose();
         }
 
-        // TODO: Make DAOs to test with
+
+        // TODO: Get to it
         [TestMethod]
         public void CheckIfSiteIsReserved()
         {
             // Arrange
-            ReservationSqlDAO dao = new ReservationSqlDAO(connectionString);
-            SiteSqlDAO dao1 = new SiteSqlDAO(connectionString);
+            SiteSqlDAO dao = new SiteSqlDAO(connectionString);
+            Site siteModels = new Site();
 
             // Act
-            IList<Reservation> list = dao.getAllReservations(siteOne);
-            IList<Site> sites = dao1.GetSiteId(name);
+            IList<Site> sites = dao.GetSiteId(name);
+
+            //foreach (Site site in sites)
+            //{
+            //    siteModels.Reservations.Add(site);
+            //}
 
             // Assert
             Assert.AreEqual(false, sites[0].IsAvailable);
