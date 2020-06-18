@@ -1,5 +1,5 @@
 ﻿-- Start a transaction
-BEGIN Transaction
+--BEGIN Transaction
 
 -- Remove all the data
 DELETE FROM reservation;
@@ -77,12 +77,13 @@ DECLARE @res3 INT
 SELECT @res3 = @@IDENTITY;
 
 -- SELECT to test
-SELECT * FROM park
-
+--SELECT * FROM park
+--SELECT * FROM park ORDER BY name ASC
+--SELECT * FROM campground WHERE park_id = @acadia
 -- Return some data to test
 SELECT @acadia AS Acadia, @arches AS Arches, @cuyVally AS CuyVally,
 @blackwoods AS Blackwoods, @devil AS Devil, @site1 AS Site1, @site2 AS Site2, @site3 AS Site3,
 @res1 AS Res1, @res2 AS Res2, @res3 AS Res3;
 
-ROLLBACK TRANSACTION
+--ROLLBACK TRANSACTION
 -- Rollback Tran

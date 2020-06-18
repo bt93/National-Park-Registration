@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Capstone.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Capstone.DAL
 {
-    interface IParkSqlDAO
+    public interface IParkSqlDAO
     {
+        IList<Park> GetParks();
     }
 }
