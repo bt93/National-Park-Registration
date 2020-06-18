@@ -7,7 +7,21 @@ namespace Capstone.Models
     public class Site
     {
         public int SiteId { get; set; }
-        public bool IsAvailable { get; set; }
+        public bool IsAvailable
+        {
+            get
+            {
+                foreach (Reservation reservation in this.Reservations)
+                {
+                    if (reservation.StartDate > DateTime.Now && reservation.EndDate < DateTime.Now)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
         public int SiteNumber { get; set; }
         public int MaxOccupancy { get; set; }
         public bool IsAccessible { get; set; }
