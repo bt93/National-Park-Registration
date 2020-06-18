@@ -15,11 +15,11 @@ namespace Capstone.Models
                 {
                     if (reservation.StartDate > DateTime.Now && reservation.EndDate < DateTime.Now)
                     {
-                        return true;
+                        return false;
                     }
                 }
 
-                return false;
+                return true;
             }
         }
         public int SiteNumber { get; set; }
