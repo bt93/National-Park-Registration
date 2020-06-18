@@ -6,6 +6,7 @@ namespace Capstone.Models
 {
     public class Site
     {
+        public int CampgroundId { get; set; }
         public int SiteId { get; set; }
         public bool IsAvailable
         {
@@ -13,13 +14,13 @@ namespace Capstone.Models
             {
                 foreach (Reservation reservation in this.Reservations)
                 {
-                    if (reservation.StartDate > DateTime.Now && reservation.EndDate < DateTime.Now)
+                    if (reservation.StartDate > UserStartTime || reservation.EndDate < UserEndTime)
                     {
-                        return false;
+                        return true;
                     }
                 }
 
-                return true;
+                return false;
             }
         }
         public int SiteNumber { get; set; }
@@ -28,6 +29,8 @@ namespace Capstone.Models
         public int MaxRvLength { get; set; }
         public bool HasUtilites { get; set; }
         public List<Reservation> Reservations { get; set; }
+        public DateTime  UserStartTime { get; set; }
+        public DateTime UserEndTime { get; set; }
 
         public override string ToString()
         {

@@ -9,15 +9,15 @@ using System.Text;
 using System.Transactions;
 
 namespace Capstone.Tests
-{
+{ 
     [TestClass]
-    public class CampgroundSqlDAOTests
+    public class SitesSqlDAOTests
     {
         private string connectionString = @"Server=.\SQLEXPRESS; Database=npcampground; Trusted_Connection=True;";
         private TransactionScope transaction;
 
         // Hold ids
-        private int acadia;
+        private int site1;
 
         [TestInitialize]
         public void SetupDB()
@@ -34,7 +34,7 @@ namespace Capstone.Tests
 
                 if (rdr.Read())
                 {
-                    acadia = Convert.ToInt32(rdr["Acadia"]);
+                    site1 = Convert.ToInt32(rdr["site1"]);
                 }
             }
         }
@@ -47,28 +47,30 @@ namespace Capstone.Tests
         }
 
         [TestMethod]
-        public void CheckCampgroundCount()
+        public void CheckSiteId()
         {
             // Assign
-            CampgroundSqlDAO dao = new CampgroundSqlDAO(connectionString);
+            SiteSqlDAO dao = new SiteSqlDAO(connectionString);
 
             // Act
-            IList<Campground> list = dao.GetCampgroundById(acadia);
+            IList<Site> list = dao.GetSiteId(site1);
 
             // Assert
-            Assert.AreEqual(1, list.Count);
+            Assert.AreEqual(site1, list[0].SiteId);
         }
-        [TestMethod]
-        public void CheckCampgroundMonths()
-        {
-            // Assign
-            CampgroundSqlDAO dao = new CampgroundSqlDAO(connectionString);
+        //[TestMethod]
+        //public void CheckCampgroundMonths()
+        //{
+        //    // Assign
+        //    CampgroundSqlDAO dao = new CampgroundSqlDAO(connectionString);
 
-            // Act
-            IList<Campground> list = dao.GetCampgroundById(acadia);
+        //    // Act
+        //    IList<Campground> list = dao.GetCampgroundById(site1);
 
-            // Assert
-            Assert.AreEqual("January", list[0].OpenMonth);
-        }
+        //    // Assert
+        //    Assert.AreEqual("Januar, list[0].OpenMonth);
+        //}
     }
 }
+    
+
