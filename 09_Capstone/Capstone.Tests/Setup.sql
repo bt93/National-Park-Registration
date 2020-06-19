@@ -82,6 +82,7 @@ SELECT @res3 = @@IDENTITY;
 --SELECT * FROM campground WHERE park_id = @acadia
 -- SELECT * FROM SITE WHERE campground_id = @blackwoods
 --SELECT * FROM SITE WHERE campground_id = @blackwoods
+--SELECT * FROM park WHERE park_id = @acadia;
 -- Return some data to test
 SELECT @acadia AS Acadia, @arches AS Arches, @cuyVally AS CuyVally,
 @blackwoods AS Blackwoods, @devil AS Devil, @site1 AS Site1, @site2 AS Site2, @site3 AS Site3,

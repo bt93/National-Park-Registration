@@ -51,27 +51,22 @@ namespace CLI
         /// <returns></returns>
         protected override bool ExecuteSelection(string choice)
         {
-            switch (choice)
+            int parkId = int.Parse(choice);
+            Park park = parkDao.GetPark(parkId);
+
+            if (park.ParkId == parkId)
             {
-                case "1": // Do whatever option 1 is. You may prompt the user for more information
-                            // (using the Helper methods), and then pass those values into some 
-                            //business object to get something done.
-                    int i1 = GetInteger("Enter the first integer: ");
-                    int i2 = GetInteger("Enter the second integer: ");
-                    Console.WriteLine($"{i1} + {i2} = {i1+i2}");
-                    Pause("Press enter to continue");
-                    return true;    // Keep running the main menu
-                case "2": // Do whatever option 2 is
-                    string name = GetString("What is your name?");
-                    WriteError($"Not yet implemented, {name}.");
-                    Pause("");
-                    return true;    // Keep running the main menu
-                case "3": 
-                    // Create and show the sub-menu
-                    SubMenu1 sm = new SubMenu1();
-                    sm.Run();
-                    return true;    // Keep running the main menu
+                ParkMenu parkMenu = new ParkMenu(park, parkDao, campgroundDao, siteDao, reservationDao);
+                parkMenu.Run();
+                
             }
+            else
+            {
+                Console.WriteLine("That park is not in our database, please try again.");
+                this.ExecuteSelection(choice);
+                return false;
+            }
+
             return true;
         }
 
@@ -83,7 +78,7 @@ namespace CLI
 
         private void PrintHeader()
         {
-            SetColor(ConsoleColor.Yellow);
+            SetColor(ConsoleColor.White);
             Console.WriteLine(Figgle.FiggleFonts.Standard.Render("Main Menu"));
             ResetColor();
         }

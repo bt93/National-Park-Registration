@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Capstone.DAL;
+using Capstone.Models;
+using System;
 using System.Collections.Generic;
 
 namespace CLI
@@ -6,17 +8,26 @@ namespace CLI
     /// <summary>
     /// A sub-menu 
     /// </summary>
-    public class SubMenu1 : CLIMenu
+    public class ParkMenu : CLIMenu
     {
         // Store any private variables here....
+        private ParkSqlDAO parkDao;
+        private CampgroundSqlDAO campgroundDao;
+        private SiteSqlDAO siteDao;
+        private ReservationSqlDAO reservationDao;
+        private Park park;
 
         /// <summary>
         /// Constructor adds items to the top-level menu
         /// </summary>
-        public SubMenu1(/** Variables may be passed in... ***/) :
-            base("Sub-Menu 1")
+        public ParkMenu(Park park, ParkSqlDAO parkDao, CampgroundSqlDAO campgroundDao, SiteSqlDAO siteDao, ReservationSqlDAO reservationDao) :
+            base("Park Menu")
         {
-            // Store any values passed in....
+            this.parkDao = parkDao;
+            this.campgroundDao = campgroundDao;
+            this.siteDao = siteDao;
+            this.reservationDao = reservationDao;
+            this.park = park;
         }
 
         protected override void SetMenuOptions()
@@ -57,15 +68,21 @@ namespace CLI
         protected override void AfterDisplayMenu()
         {
             base.AfterDisplayMenu();
-            SetColor(ConsoleColor.Cyan);
+            SetColor(ConsoleColor.Green);
             Console.WriteLine("Display some data here, AFTER the sub-menu is shown....");
             ResetColor();
         }
 
         private void PrintHeader()
         {
-            SetColor(ConsoleColor.Magenta);
-            Console.WriteLine(Figgle.FiggleFonts.Standard.Render("Sub-Menu 1"));
+            SetColor(ConsoleColor.Blue);
+            Console.WriteLine(Figgle.FiggleFonts.Standard.Render(this.park.Name));
+            Console.WriteLine($"Location: {this.park.Location}");
+            Console.WriteLine($"Established: {this.park.EstablishedDate}");
+            Console.WriteLine($"Area: {this.park.Area}");
+            Console.WriteLine($"Annual Visitors: {this.park.Visitors}");
+            Console.WriteLine();
+            Console.WriteLine(this.park.Description);
             ResetColor();
         }
 

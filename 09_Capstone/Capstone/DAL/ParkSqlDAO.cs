@@ -38,6 +38,30 @@ namespace Capstone.DAL
             return parks;
         }
 
+        internal Park GetPark(int parkId)
+        {
+            Park park = new Park();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+
+                const string sql = "SELECT * FROM park WHERE park_id = @parkId;";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@parkId", parkId);
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    park = ParseRow(rdr);
+                }
+            }
+
+            return park;
+        }
+
         private Park ParseRow(SqlDataReader rdr)
         {
             Park park = new Park();
