@@ -17,7 +17,7 @@ namespace Capstone.Tests
         private TransactionScope transaction;
 
         // Hold ids
-        private int site1;
+        private int blackWoods;
 
         [TestInitialize]
         public void SetupDB()
@@ -34,7 +34,7 @@ namespace Capstone.Tests
 
                 if (rdr.Read())
                 {
-                    site1 = Convert.ToInt32(rdr["site1"]);
+                    blackWoods = Convert.ToInt32(rdr["Blackwoods"]);
                 }
             }
         }
@@ -53,10 +53,10 @@ namespace Capstone.Tests
             SiteSqlDAO dao = new SiteSqlDAO(connectionString);
 
             // Act
-            IList<Site> list = dao.GetSiteId(site1);
+            IList<Site> list = dao.GetSiteId(blackWoods);
 
             // Assert
-            Assert.AreEqual(site1, list[0].SiteId);
+            Assert.AreEqual(blackWoods, list[0].CampgroundId);
         }
         //[TestMethod]
         //public void CheckCampgroundMonths()
