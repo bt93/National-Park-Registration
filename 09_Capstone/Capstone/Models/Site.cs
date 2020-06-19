@@ -8,7 +8,7 @@ namespace Capstone.Models
     {
         public int CampgroundId { get; set; }
         public int SiteId { get; set; }
-        public bool IsAvailable
+        public bool IsBooked
         {
             get
             {

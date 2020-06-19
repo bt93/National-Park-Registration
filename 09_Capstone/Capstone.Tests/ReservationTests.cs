@@ -58,19 +58,17 @@ namespace Capstone.Tests
             // Arrange
             SiteSqlDAO siteDao = new SiteSqlDAO(connectionString);
             ReservationSqlDAO resDao = new ReservationSqlDAO(connectionString);
-            Site siteModels = new Site();
-
 
 
             // Act
             IList<Site> sites = siteDao.GetSiteId(name);
             sites[0].Reservations = resDao.getAllReservations(siteOne);
-            sites[0].UserStartTime = DateTime.Now.AddDays(4);
-            sites[0].UserEndTime = DateTime.Now.AddDays(6);
+            sites[0].UserStartTime = DateTime.Today.AddDays(-2);
+            sites[0].UserEndTime = DateTime.Today.AddDays(3);
 
             
             // Assert
-            Assert.AreEqual(true, sites[0].IsAvailable);
+            Assert.AreEqual(true, sites[0].IsBooked);
 
         }
     }
