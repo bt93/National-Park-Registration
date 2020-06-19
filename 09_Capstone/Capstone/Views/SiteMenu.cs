@@ -15,19 +15,21 @@ namespace Capstone.Views
         private SiteSqlDAO siteDao;
         private ReservationSqlDAO reservationDao;
         private Campground campground;
-        private Park park;
-        private bool isACamp;
+        private string arrivalDate;
+        private string departureDate;
+        
 
         /// <summary>
         /// Constructor adds items to the top-level menu
         /// </summary>
-        public SiteMenu(Campground campground, SiteSqlDAO siteDao, ReservationSqlDAO reservationDao) :
+        public SiteMenu(Campground campground, SiteSqlDAO siteDao, ReservationSqlDAO reservationDao, string arrivalDate, string departureDate) :
             base("Park Menu")
         {
             this.siteDao = siteDao;
             this.reservationDao = reservationDao;
             this.campground = campground;
-            this.park = park;
+            this.arrivalDate = arrivalDate;
+            this.departureDate = departureDate;
         }
 
         protected override void SetMenuOptions()
@@ -76,15 +78,28 @@ namespace Capstone.Views
         private void PrintHeader()
         {
             SetColor(ConsoleColor.Blue);
-           // Console.WriteLine(Figgle.FiggleFonts.Standard.Render(this.park.Name));
-            Console.WriteLine($"{"Name:",0} {"Open:",8} {"Close:",8} {"Daily Fee:",9}");
-            //Console.Write("Open");
-            //foreach (Campground campground in park.Campgrounds)
-            //{
-            //    Console.WriteLine($"{campground.CampgroundId} {campground.Name,0} {campground.OpenMonth,8} {campground.CloseMonth,8} {campground.DailyFee,9}");
-
-            //}
+            
+            Console.WriteLine(Figgle.FiggleFonts.Standard.Render(this.campground.Name));
+            ListAvailableSites();
+            
             ResetColor();
+        }
+
+        private void ListAvailableSites()
+        {
+            foreach (Site site in campground.Sites)
+            {
+                site.UserStartTime = Convert.ToDateTime(arrivalDate);
+                site.UserEndTime = Convert.ToDateTime(departureDate);
+                int daysOfStay = Convert.ToInt32((site.UserStartTime.Date - site.UserEndTime.Date).TotalDays);
+                site.Reservations = reservationDao.getAllReservations(site.SiteId);
+
+                if (!site.IsBooked)
+                {
+                    Console.WriteLine($"{site.SiteNumber} {site.MaxOccupancy}, {site.IsAccessible}, {site.MaxRvLength}, {site.HasUtilites}" +
+                        $"{campground.DailyFee *= daysOfStay:C}");
+                }
+            }
         }
     }
 }

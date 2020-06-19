@@ -21,7 +21,6 @@ namespace Capstone.Views
         private ReservationSqlDAO reservationDao;
         private Park park;
         private Reservation reservation;
-        private bool isACamp;
 
         /// <summary>
         /// Constructor adds items to the top-level menu
@@ -54,38 +53,24 @@ namespace Capstone.Views
             {
                 case "1": // Do whatever option 1 is
                    
-                    int campground = CLIMenu.GetInteger($"Which Campground?");
-                    
-                    foreach (Campground c in park.Campgrounds)
+                    int campgroundChoice = CLIMenu.GetInteger($"Which Campground?");
+                    if (campgroundChoice > 0 && campgroundChoice <= park.Campgrounds.Count)
                     {
-                        if (c.CampgroundId == campground)
-                        {
-                            isACamp = true;
-                            break;
-                        }
-                        else
-                        {
-                            isACamp = false;
-                            break;
-                        }
-                    }
+                        Campground campground = park.Campgrounds[campgroundChoice - 1];
+                        campground.Sites = siteDao.GetSiteId(campground.CampgroundId);
 
-                    if (isACamp)
-                    {
-                        park.Campgrounds[campground].Sites = siteDao.GetSiteId(campground);
-
-                        string arrivalDate = CLIMenu.GetString("What is your arrival date?");
-                        string departureDate = CLIMenu.GetString("What is your departure date?");
+                        string arrivalDate = CLIMenu.GetString("What is your arrival date? (yyyy-mm-dd)");
+                        string departureDate = CLIMenu.GetString("What is your departure date?(yyyy-mm-dd)");
 
 
-                        //SiteMenu siteMenu = new SiteMenu(, siteDao, reservationDao);
+                        SiteMenu siteMenu = new SiteMenu(campground, siteDao, reservationDao, arrivalDate, departureDate);
+                        siteMenu.Run();
                     }
                     else
                     {
                         Console.WriteLine("That campsite is not in our database.");
                     }
 
-                    
                     Pause("");
                     return true;
                 case "2": // Do whatever option 2 is
@@ -116,10 +101,11 @@ namespace Capstone.Views
             Console.WriteLine(Figgle.FiggleFonts.Standard.Render(this.park.Name));
             Console.WriteLine($"{"Name:", 0} {"Open:", 8} {"Close:", 8} {"Daily Fee:", 9}");
             //Console.Write("Open");
+            int sequence = 1;
             foreach (Campground campground in park.Campgrounds)
             {
-                Console.WriteLine($"{campground.CampgroundId} {campground.Name, 0} {campground.OpenMonth, 8} {campground.CloseMonth, 8} {campground.DailyFee, 9}");
-                
+                Console.WriteLine($"{sequence} {campground.Name, 0} {campground.OpenMonth, 8} {campground.CloseMonth, 8} {campground.DailyFee, 9}");
+                sequence++;
             }
             ResetColor();
         }
