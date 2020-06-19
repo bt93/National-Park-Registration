@@ -56,19 +56,21 @@ namespace Capstone.Tests
         public void CheckIfSiteIsReserved()
         {
             // Arrange
-            SiteSqlDAO dao = new SiteSqlDAO(connectionString);
+            SiteSqlDAO siteDao = new SiteSqlDAO(connectionString);
+            ReservationSqlDAO resDao = new ReservationSqlDAO(connectionString);
             Site siteModels = new Site();
 
+
+
             // Act
-            IList<Site> sites = dao.GetSiteId(name);
+            IList<Site> sites = siteDao.GetSiteId(name);
+            sites[0].Reservations = resDao.getAllReservations(siteOne);
+            sites[0].UserStartTime = DateTime.Now.AddDays(4);
+            sites[0].UserEndTime = DateTime.Now.AddDays(6);
 
-            //foreach (Site site in sites)
-            //{
-            //    siteModels.Reservations.Add(site);
-            //}
-
+            
             // Assert
-            Assert.AreEqual(false, sites[0].IsAvailable);
+            Assert.AreEqual(true, sites[0].IsAvailable);
 
         }
     }

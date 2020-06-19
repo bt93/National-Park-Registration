@@ -14,7 +14,7 @@ namespace Capstone.Models
             {
                 foreach (Reservation reservation in this.Reservations)
                 {
-                    if (reservation.StartDate > UserStartTime || reservation.EndDate < UserEndTime)
+                    if (reservation.StartDate >= UserStartTime && reservation.EndDate <= UserEndTime)
                     {
                         return true;
                     }
@@ -28,7 +28,7 @@ namespace Capstone.Models
         public bool IsAccessible { get; set; }
         public int MaxRvLength { get; set; }
         public bool HasUtilites { get; set; }
-        public List<Reservation> Reservations { get; set; }
+        public IList<Reservation> Reservations { get; set; }
         public DateTime  UserStartTime { get; set; }
         public DateTime UserEndTime { get; set; }
 
