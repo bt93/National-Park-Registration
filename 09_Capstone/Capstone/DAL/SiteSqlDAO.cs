@@ -24,9 +24,9 @@ namespace Capstone.DAL
                 conn.Open();
 
 
-                const string sql = "SELECT * FROM SITE WHERE campground_id = @SiteId";
+                const string sql = "SELECT * FROM SITE WHERE campground_id = @campgroundId";
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@SiteId", siteId);
+                cmd.Parameters.AddWithValue("@campgroundId", siteId);
 
                 SqlDataReader rdr = cmd.ExecuteReader();
 
