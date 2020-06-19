@@ -20,6 +20,7 @@ namespace Capstone.Views
         private SiteSqlDAO siteDao;
         private ReservationSqlDAO reservationDao;
         private Park park;
+        private bool isACamp;
 
         /// <summary>
         /// Constructor adds items to the top-level menu
@@ -54,23 +55,31 @@ namespace Capstone.Views
                 case "1": // Do whatever option 1 is
                    
                     int campground = CLIMenu.GetInteger($"Which Campground?");
+                    
                     foreach (Campground c in park.Campgrounds)
                     {
                         if (c.CampgroundId == campground)
                         {
-
-                            string arrivalDate = CLIMenu.GetString("What is your arrival date?");
-
-                            string departureDate = CLIMenu.GetString("What is your departure date?"); 
-                            
+                            isACamp = true;
+                            break;
                         }
                         else
                         {
-                            Console.WriteLine("That is not an option");
-                            return false;
+                            isACamp = false;
+                            break;
                         }
-
                     }
+
+                    if (isACamp)
+                    {
+                        string arrivalDate = CLIMenu.GetString("What is your arrival date?");
+                        string departureDate = CLIMenu.GetString("What is your departure date?");
+                    }
+                    else
+                    {
+                        Console.WriteLine("That campsite is not in our database.");
+                    }
+                    
                     Pause("");
                     return true;
                 case "2": // Do whatever option 2 is
@@ -103,7 +112,7 @@ namespace Capstone.Views
             //Console.Write("Open");
             foreach (Campground campground in park.Campgrounds)
             {
-                Console.WriteLine($"{campground.Name, 0} {campground.OpenMonth, 8} {campground.CloseMonth, 8} {campground.DailyFee, 9}");
+                Console.WriteLine($"{campground.CampgroundId} {campground.Name, 0} {campground.OpenMonth, 8} {campground.CloseMonth, 8} {campground.DailyFee, 9}");
                 
             }
             ResetColor();
