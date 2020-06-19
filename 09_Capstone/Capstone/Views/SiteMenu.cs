@@ -70,7 +70,7 @@ namespace Capstone.Views
         {
             base.AfterDisplayMenu();
             SetColor(ConsoleColor.Green);
-            Console.WriteLine("Display some data here, AFTER the sub-menu is shown....");
+            Console.WriteLine("Make your selection Below: ");
             ResetColor();
         }
 
@@ -96,8 +96,8 @@ namespace Capstone.Views
 
                 if (!site.IsBooked)
                 {
-                    Console.WriteLine($"{site.SiteNumber} {site.MaxOccupancy}, {site.IsAccessible}, {site.MaxRvLength}, {site.HasUtilites}" +
-                        $"{campground.DailyFee *= daysOfStay:C}");
+                    Console.WriteLine($"{site.SiteNumber} {site.MaxOccupancy}, {site.IsAccessible}, {site.MaxRvLength}, {site.HasUtilites} " +
+                        $"{campground.DailyFee *= daysOfStay}");
                 }
             }
         }
