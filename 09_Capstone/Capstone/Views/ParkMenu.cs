@@ -1,5 +1,6 @@
 ﻿using Capstone.DAL;
 using Capstone.Models;
+using Capstone.Views;
 using System;
 using System.Collections.Generic;
 
@@ -16,6 +17,8 @@ namespace CLI
         private SiteSqlDAO siteDao;
         private ReservationSqlDAO reservationDao;
         private Park park;
+        private string connectionString;
+        private CampgroundMenu campgroundMenu;
 
         /// <summary>
         /// Constructor adds items to the top-level menu
@@ -32,9 +35,9 @@ namespace CLI
 
         protected override void SetMenuOptions()
         {
-            this.menuOptions.Add("1", "Option 1");
-            this.menuOptions.Add("2", "Do Option 2 and return to Main");
-            this.menuOptions.Add("B", "Back to Main Menu");
+            this.menuOptions.Add("1", "View Campgrounds");
+            this.menuOptions.Add("2", "Search for Reservation");
+            this.menuOptions.Add("B", "Return to Previous Screen");
             this.quitKey = "B";
         }
 
@@ -49,7 +52,14 @@ namespace CLI
             switch (choice)
             {
                 case "1": // Do whatever option 1 is
-                    WriteError("Not yet implemented");
+                    park.Campgrounds = this.campgroundDao.GetCampgroundById(this.park.ParkId);
+                    //foreach (Campground campground in campgrounds)
+                    //{
+                    //    park.Campgrounds.Add(campground);
+                    //}
+                    this.campgroundMenu = new CampgroundMenu(park, campgroundDao, siteDao, reservationDao);
+                    campgroundMenu.Run();
+
                     Pause("");
                     return true;
                 case "2": // Do whatever option 2 is

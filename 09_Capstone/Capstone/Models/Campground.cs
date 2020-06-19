@@ -13,7 +13,7 @@ namespace Capstone.Models
         public int OpenInt { get; set; }
         public int CloseInt { get; set; }
         public decimal DailyFee { get; set; }
-        public List<Site> Sites { get; set; }
+        public IList<Site> Sites { get; set; }
         public string OpenMonth
         {
             get

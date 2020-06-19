@@ -13,7 +13,7 @@ namespace Capstone.Models
         public int Area { get; set; }
         public int Visitors { get; set; }
         public string Description { get; set; }
-        public List<Campground> Campgrounds { get; set; }
+        public IList<Campground> Campgrounds { get; set; }
 
         public override string ToString()
         {
