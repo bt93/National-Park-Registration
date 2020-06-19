@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Capstone.DAL;
+using Capstone.Models;
+using System;
 using System.Collections.Generic;
 
 namespace CLI
@@ -10,22 +12,34 @@ namespace CLI
     {
         // You may want to store some private variables here.  YOu may want those passed in 
         // in the constructor of this menu
+        private ParkSqlDAO parkDao;
+        private CampgroundSqlDAO campgroundDao;
+        private SiteSqlDAO siteDao;
+        private ReservationSqlDAO reservationDao;
+        IList<Park> parks;
 
         /// <summary>
         /// Constructor adds items to the top-level menu. You will likely have parameters  passed in
         /// here...
         /// </summary>
-        public MainMenu(/* Add any needed parameters here */) : base("Main Menu")
+        public MainMenu(ParkSqlDAO park, CampgroundSqlDAO campground, SiteSqlDAO site, ReservationSqlDAO reservation) : base("Main Menu")
         {
-            // Set any private variables here.
+            this.parkDao = park;
+            this.campgroundDao = campground;
+            this.siteDao = site;
+            this.reservationDao = reservation;
+            parks = this.parkDao.GetParks();
         }
 
         protected override void SetMenuOptions()
         {
             // A Sample menu.  Build the dictionary here
-            this.menuOptions.Add("1", "Add 2 integers");
-            this.menuOptions.Add("2", "Ask the user for name");
-            this.menuOptions.Add("3", "Go to a sub-menu");
+            foreach (Park park in parks)
+            {
+                this.menuOptions.Add(park.ParkId.ToString(), park.Name);
+            }
+
+
             this.menuOptions.Add("Q", "Quit program");
         }
 
