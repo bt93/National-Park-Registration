@@ -104,7 +104,7 @@ namespace Capstone.Views
             int sequence = 1;
             foreach (Campground campground in park.Campgrounds)
             {
-                Console.WriteLine($"{sequence} {campground.Name, 0} {campground.OpenMonth, 8} {campground.CloseMonth, 8} {campground.DailyFee:C, 9}");
+                Console.WriteLine($"{sequence} {campground.Name, 0} {campground.OpenMonth, 8} {campground.CloseMonth, 8} {campground.DailyFee:C}");
                 sequence++;
             }
             ResetColor();

@@ -91,13 +91,13 @@ namespace Capstone.Views
             {
                 site.UserStartTime = Convert.ToDateTime(arrivalDate);
                 site.UserEndTime = Convert.ToDateTime(departureDate);
-                int daysOfStay = Convert.ToInt32((site.UserStartTime.Date - site.UserEndTime.Date).TotalDays);
+                int daysOfStay = Convert.ToInt32((site.UserEndTime.Date - site.UserStartTime.Date).TotalDays);
                 site.Reservations = reservationDao.getAllReservations(site.SiteId);
 
                 if (!site.IsBooked)
                 {
                     Console.WriteLine($"{site.SiteNumber} {site.MaxOccupancy}, {site.IsAccessible}, {site.MaxRvLength}, {site.HasUtilites} " +
-                        $"{campground.DailyFee *= daysOfStay}");
+                        $"{campground.DailyFee *= daysOfStay:C}");
                 }
             }
         }
