@@ -17,7 +17,6 @@ namespace CLI
         private SiteSqlDAO siteDao;
         private ReservationSqlDAO reservationDao;
         private Park park;
-        private string connectionString;
         private CampgroundMenu campgroundMenu;
 
         /// <summary>
@@ -88,9 +87,9 @@ namespace CLI
             SetColor(ConsoleColor.Blue);
             Console.WriteLine(Figgle.FiggleFonts.Standard.Render(this.park.Name));
             Console.WriteLine($"Location: {this.park.Location}");
-            Console.WriteLine($"Established: {this.park.EstablishedDate}");
-            Console.WriteLine($"Area: {this.park.Area}");
-            Console.WriteLine($"Annual Visitors: {this.park.Visitors}");
+            Console.WriteLine($"Established: {this.park.EstablishedDate.ToString("MM/dd/yyyy")}");
+            Console.WriteLine($"Area: {String.Format("{0:n0}",this.park.Area)}");
+            Console.WriteLine($"Annual Visitors: {String.Format("{0:n0}", this.park.Visitors)}");
             Console.WriteLine();
             Console.WriteLine(this.park.Description);
             ResetColor();

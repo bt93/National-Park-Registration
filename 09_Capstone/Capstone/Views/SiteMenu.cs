@@ -94,7 +94,7 @@ namespace Capstone.Views
         protected override void AfterDisplayMenu()
         {
             base.AfterDisplayMenu();
-            SetColor(ConsoleColor.Green);
+            SetColor(ConsoleColor.Yellow);
             Console.WriteLine("Make your selection Below: ");
             ResetColor();
         }

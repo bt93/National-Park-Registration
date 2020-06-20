@@ -58,18 +58,6 @@ namespace Capstone.Tests
             // Assert
             Assert.AreEqual(blackWoods, list[0].CampgroundId);
         }
-        //[TestMethod]
-        //public void CheckCampgroundMonths()
-        //{
-        //    // Assign
-        //    CampgroundSqlDAO dao = new CampgroundSqlDAO(connectionString);
-
-        //    // Act
-        //    IList<Campground> list = dao.GetCampgroundById(site1);
-
-        //    // Assert
-        //    Assert.AreEqual("Januar, list[0].OpenMonth);
-        //}
     }
 }
     

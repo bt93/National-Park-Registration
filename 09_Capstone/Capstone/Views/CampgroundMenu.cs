@@ -15,12 +15,12 @@ namespace Capstone.Views
     public class CampgroundMenu : CLIMenu
     {
         // Store any private variables here....
-        private ParkSqlDAO parkDao;
+        
         private CampgroundSqlDAO campgroundDao;
         private SiteSqlDAO siteDao;
         private ReservationSqlDAO reservationDao;
         private Park park;
-        private Reservation reservation;
+        
 
         /// <summary>
         /// Constructor adds items to the top-level menu
@@ -89,7 +89,7 @@ namespace Capstone.Views
         protected override void AfterDisplayMenu()
         {
             base.AfterDisplayMenu();
-            SetColor(ConsoleColor.Green);
+            SetColor(ConsoleColor.Yellow);
             Console.WriteLine("Make your selection below: ");
             ResetColor();
         }
@@ -99,12 +99,12 @@ namespace Capstone.Views
         {
             SetColor(ConsoleColor.Blue);
             Console.WriteLine(Figgle.FiggleFonts.Standard.Render(this.park.Name));
-            Console.WriteLine($"{"Name:", 0} {"Open:", 8} {"Close:", 8} {"Daily Fee:", 9}");
             //Console.Write("Open");
             int sequence = 1;
             foreach (Campground campground in park.Campgrounds)
             {
-                Console.WriteLine($"{sequence} {campground.Name, 0} {campground.OpenMonth, 8} {campground.CloseMonth, 8} {campground.DailyFee:C}");
+
+                Console.WriteLine($" Campground Name:{sequence} | {campground.Name, 0} | Opening Month:{campground.OpenMonth, 0} | Closing Month:{campground.CloseMonth, 0} | Daily Fee:{campground.DailyFee:C}");
                 sequence++;
             }
             ResetColor();
