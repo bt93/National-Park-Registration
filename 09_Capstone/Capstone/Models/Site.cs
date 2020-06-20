@@ -14,7 +14,17 @@ namespace Capstone.Models
             {
                 foreach (Reservation reservation in this.Reservations)
                 {
-                    if (reservation.StartDate <= UserStartTime && reservation.EndDate >= UserEndTime)
+                    if (reservation.StartDate <= UserStartTime && reservation.EndDate >= UserStartTime)
+                    {
+                        return true;
+                    }
+
+                    if (reservation.StartDate <= UserEndTime && reservation.EndDate >= UserEndTime)
+                    {
+                        return true;
+                    }
+
+                    if (reservation.EndDate <= UserStartTime && reservation.EndDate >= UserEndTime)
                     {
                         return true;
                     }
@@ -31,6 +41,7 @@ namespace Capstone.Models
         public IList<Reservation> Reservations { get; set; }
         public DateTime  UserStartTime { get; set; }
         public DateTime UserEndTime { get; set; }
+        public decimal TotalFee { get; set; }
 
         public override string ToString()
         {

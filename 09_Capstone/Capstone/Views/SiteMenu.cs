@@ -15,14 +15,16 @@ namespace Capstone.Views
         private SiteSqlDAO siteDao;
         private ReservationSqlDAO reservationDao;
         private Campground campground;
+        private Park park;
         private string arrivalDate;
         private string departureDate;
-        
+        private IList<Site> sites;
+
 
         /// <summary>
         /// Constructor adds items to the top-level menu
         /// </summary>
-        public SiteMenu(Campground campground, SiteSqlDAO siteDao, ReservationSqlDAO reservationDao, string arrivalDate, string departureDate) :
+        public SiteMenu(Park park, Campground campground, SiteSqlDAO siteDao, ReservationSqlDAO reservationDao, string arrivalDate, string departureDate) :
             base("Park Menu")
         {
             this.siteDao = siteDao;
@@ -30,11 +32,12 @@ namespace Capstone.Views
             this.campground = campground;
             this.arrivalDate = arrivalDate;
             this.departureDate = departureDate;
+            this.park = park;
         }
 
         protected override void SetMenuOptions()
         {
-            this.menuOptions.Add("1", "Search for Avaiable Reservation");
+            this.menuOptions.Add("1", "Create a reservation");
             this.menuOptions.Add("B", "Return to Previous Screen");
             this.quitKey = "B";
         }
@@ -50,6 +53,28 @@ namespace Capstone.Views
             switch (choice)
             {
                 case "1": // Do whatever option 1 is
+                    int userSelection = CLIMenu.GetInteger("Please Make a reservation");
+                    string userName = CLIMenu.GetString("What is Your Name?");
+
+                    foreach (Site site in sites)
+                    {
+                        if (userSelection == site.SiteNumber)
+                        {
+                            int resId = reservationDao.AddReservation(site.SiteId, userName, site.UserStartTime, site.UserEndTime);
+                            Console.WriteLine($"Reservation Confirmed! Your reservation number is {resId}!");
+                            Pause("");
+                            break;
+                        }
+
+                    }
+
+                    foreach (Site site in sites)
+                    {
+                        if (userSelection != site.SiteNumber)
+                        {
+                            Console.WriteLine("Incorrect Site Number Try again.");
+                        }
+                    }
 
                     Pause("");
                     return true;
@@ -87,6 +112,11 @@ namespace Capstone.Views
 
         private void ListAvailableSites()
         {
+            int counter = 0;
+            string accessible;
+            string utilities;
+            sites = new List<Site>();
+
             try
             {
                 foreach (Site site in campground.Sites)
@@ -98,15 +128,48 @@ namespace Capstone.Views
 
                     if (!site.IsBooked)
                     {
-                        Console.WriteLine($"{site.SiteNumber} {site.MaxOccupancy}, {site.IsAccessible}, {site.MaxRvLength}, {site.HasUtilites} " +
-                            $"{campground.DailyFee *= daysOfStay:C}");
+                        sites.Add(site);
+
+                        if (site.IsAccessible)
+                        {
+                            accessible = "Yes";
+                        }
+                        else
+                        {
+                            accessible = "No";
+                        }
+
+                        if (site.HasUtilites)
+                        {
+                            utilities = "Yes";
+                        }
+                        else
+                        {
+                            utilities = "No";
+                        }
+
+                        Console.WriteLine($"Site No: {site.SiteNumber}, Occupancy {site.MaxOccupancy}, Accessible? {accessible}, MaxRvLength: {site.MaxRvLength}, Utilities: {utilities} " +
+                            $"Cost: {site.TotalFee = campground.DailyFee * daysOfStay:C}");
+                        counter++;
+
+                        if (counter == 5)
+                        {
+                            break;
+                        }
                     }
+                }
+
+                if (sites.Count == 0)
+                {
+                    Console.WriteLine("There are no available campsites at the time you requested.");
                 }
             }
             catch
             {
                 Console.WriteLine("Incorect Date Format, Please retry.");
                 Pause("");
+                CampgroundMenu campgroundMenu = new CampgroundMenu(park, campgroundDao, siteDao, reservationDao);
+                campgroundMenu.Run();
             }
             
         }

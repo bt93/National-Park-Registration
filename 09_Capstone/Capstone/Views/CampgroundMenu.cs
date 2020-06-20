@@ -63,7 +63,7 @@ namespace Capstone.Views
                         string departureDate = CLIMenu.GetString("What is your departure date?(yyyy-mm-dd)");
 
 
-                        SiteMenu siteMenu = new SiteMenu(campground, siteDao, reservationDao, arrivalDate, departureDate);
+                        SiteMenu siteMenu = new SiteMenu(park, campground, siteDao, reservationDao, arrivalDate, departureDate);
                         siteMenu.Run();
                     }
                     else

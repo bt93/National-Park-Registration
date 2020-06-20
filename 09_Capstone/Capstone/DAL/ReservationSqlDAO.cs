@@ -15,18 +15,18 @@ namespace Capstone.DAL
             connectionString = databaseconnectionString;
         }
 
-        public int AddReservation(Reservation reservation)
+        public int AddReservation(int siteId, string name, DateTime fromDate, DateTime toDate)
         {
-            using (SqlConnection conn = new SqlConnection()) 
+            using (SqlConnection conn = new SqlConnection(connectionString)) 
             {
                 conn.Open();
 
                 SqlCommand cmd = new SqlCommand("INSERT INTO Reservation (site_id, name, from_date, to_date, create_date) VALUES (@siteId, @name, @fromDate, @toDate, @createDate); Select @@identity;", conn );
-                cmd.Parameters.AddWithValue("@siteId", reservation.SiteId);
-                cmd.Parameters.AddWithValue("@name", reservation.Name);
-                cmd.Parameters.AddWithValue("@fromDate", reservation.StartDate);
-                cmd.Parameters.AddWithValue("@toDate", reservation.EndDate);
-                cmd.Parameters.AddWithValue("@createDate", reservation.CreateDate);
+                cmd.Parameters.AddWithValue("@siteId", siteId);
+                cmd.Parameters.AddWithValue("@name", name);
+                cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                cmd.Parameters.AddWithValue("@toDate", toDate);
+                cmd.Parameters.AddWithValue("@createDate", DateTime.Now);
 
                 int id = Convert.ToInt32(cmd.ExecuteScalar());
 
