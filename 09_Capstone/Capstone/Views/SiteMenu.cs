@@ -87,19 +87,28 @@ namespace Capstone.Views
 
         private void ListAvailableSites()
         {
-            foreach (Site site in campground.Sites)
+            try
             {
-                site.UserStartTime = Convert.ToDateTime(arrivalDate);
-                site.UserEndTime = Convert.ToDateTime(departureDate);
-                int daysOfStay = Convert.ToInt32((site.UserEndTime.Date - site.UserStartTime.Date).TotalDays);
-                site.Reservations = reservationDao.getAllReservations(site.SiteId);
-
-                if (!site.IsBooked)
+                foreach (Site site in campground.Sites)
                 {
-                    Console.WriteLine($"{site.SiteNumber} {site.MaxOccupancy}, {site.IsAccessible}, {site.MaxRvLength}, {site.HasUtilites} " +
-                        $"{campground.DailyFee *= daysOfStay:C}");
+                    site.UserStartTime = Convert.ToDateTime(arrivalDate);
+                    site.UserEndTime = Convert.ToDateTime(departureDate);
+                    int daysOfStay = Convert.ToInt32((site.UserEndTime.Date - site.UserStartTime.Date).TotalDays);
+                    site.Reservations = reservationDao.getAllReservations(site.SiteId);
+
+                    if (!site.IsBooked)
+                    {
+                        Console.WriteLine($"{site.SiteNumber} {site.MaxOccupancy}, {site.IsAccessible}, {site.MaxRvLength}, {site.HasUtilites} " +
+                            $"{campground.DailyFee *= daysOfStay:C}");
+                    }
                 }
             }
+            catch
+            {
+                Console.WriteLine("Incorect Date Format, Please retry.");
+                Pause("");
+            }
+            
         }
     }
 }
