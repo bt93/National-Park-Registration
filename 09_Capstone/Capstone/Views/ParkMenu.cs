@@ -35,7 +35,6 @@ namespace CLI
         protected override void SetMenuOptions()
         {
             this.menuOptions.Add("1", "View Campgrounds");
-            this.menuOptions.Add("2", "Search for Reservation");
             this.menuOptions.Add("B", "Return to Previous Screen");
             this.quitKey = "B";
         }
@@ -61,10 +60,6 @@ namespace CLI
 
                     Pause("");
                     return true;
-                case "2": // Do whatever option 2 is
-                    WriteError("When this option is complete, we will exit this submenu by returning false from the ExecuteSelection method.");
-                    Pause("");
-                    return false;
             }
             return true;
         }

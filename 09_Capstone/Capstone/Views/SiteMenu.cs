@@ -63,19 +63,12 @@ namespace Capstone.Views
                             int resId = reservationDao.AddReservation(site.SiteId, userName, site.UserStartTime, site.UserEndTime);
                             Console.WriteLine($"Reservation Confirmed! Your reservation number is {resId}!");
                             Pause("");
-                            break;
+                            return true;
                         }
 
                     }
-
-                    foreach (Site site in sites)
-                    {
-                        if (userSelection != site.SiteNumber)
-                        {
-                            Console.WriteLine("Incorrect Site Number Try again.");
-                        }
-                    }
-
+                    Console.WriteLine("Incorrect Site Number Try again.");
+                        
                     Pause("");
                     return true;
                 case "2": // Do whatever option 2 is
